@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.IPMessaging.Android", "source\Twilio.IPMessaging.Android\Twilio.IPMessaging.Android.csproj", "{113D21B8-63D9-4310-943F-CCF274EC2E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.IPMessaging.iOS", "source\Twilio.IPMessaging.iOS\Twilio.IPMessaging.iOS.csproj", "{B49319FF-A11F-4EC9-B518-C9F76FFC3707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Common.iOS", "source\Twilio.Common.iOS\Twilio.Common.iOS.csproj", "{B87C8255-A818-4E20-9940-81BFEF9C5137}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Common.Android", "source\Twilio.Common.Android\Twilio.Common.Android.csproj", "{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113D21B8-63D9-4310-943F-CCF274EC2E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49319FF-A11F-4EC9-B518-C9F76FFC3707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87C8255-A818-4E20-9940-81BFEF9C5137}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
