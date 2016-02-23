@@ -10,6 +10,7 @@ var TWILIO_PODSPEC = new [] {
 	"platform :ios, '8.1'",
 	"pod 'TwilioIPMessagingClient'",
 	"pod 'TwilioCommon'",
+	"pod 'TwilioConversationsClient', :podspec => 'https://media.twiliocdn.com/sdk/ios/conversations/v0.21/TwilioConversationsClient.podspec'",
 };
 
 var TARGET = Argument ("target", Argument ("t", "lib"));
@@ -56,6 +57,8 @@ Task ("externals-ios")
 		"./externals/ios/libTwilioCommon.a");
 	CopyFile ("./externals/ios/Pods/TwilioIPMessagingClient/TwilioIPMessagingClient.framework/Versions/A/TwilioIPMessagingClient", 
 		"./externals/ios/libTwilioIPMessagingClient.a");
+	CopyFile ("./externals/ios/Pods/TwilioConversationsClient/TwilioConversationsClient.framework/Versions/A/TwilioConversationsClient", 
+		"./externals/ios/libTwilioConversationsClient.a");
 });
 Task ("externals").IsDependentOn ("externals-android").IsDependentOn ("externals-ios");
 
