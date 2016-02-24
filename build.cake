@@ -4,6 +4,7 @@
 
 var TWILIO_COMMON_ANDROID = "https://media.twiliocdn.com/sdk/android/common/v0.1/twilio-common-android.tar.bz2";
 var TWILIO_IPMESSAGING_ANDROID = "https://media.twiliocdn.com/sdk/android/ip-messaging/v0.4/twilio-ip-messaging-android.tar.bz2";
+var TWILIO_VIDEO_ANDROID = "https://github.com/twiliodeved/video-quickstart-android/archive/master.zip";
 
 var TWILIO_PODSPEC = new [] { 
 	"source 'https://github.com/twilio/cocoapod-specs'",
@@ -23,11 +24,17 @@ Task ("libs").IsDependentOn ("externals").Does (() =>
 
 Task ("samples").IsDependentOn ("libs").Does (() => 
 {
-	NuGetRestore ("./samples/TwilioIPMessagingSampleAndroid.sln");
-	DotNetBuild ("./samples/TwilioIPMessagingSampleAndroid.sln");
+	var sampleSlns = new [] { 
+		"./samples/TwilioIPMessagingSampleAndroid.sln",
+		"./samples/TwilioIPMessagingSampleiOS.sln",
+		"./samples/TwilioConversationsSampleAndroid.sln",
+		"./samples/TwilioConversationsSampleiOS.sln",
+	};
 
-	NuGetRestore ("./samples/TwilioIPMessagingSampleiOS.sln");
-	DotNetBuild ("./samples/TwilioIPMessagingSampleiOS.sln");
+	foreach (var sln in sampleSlns) {
+		NuGetRestore (sln);
+		DotNetBuild (sln);
+	}
 });
 
 Task ("externals-android")
@@ -42,6 +49,11 @@ Task ("externals-android")
 
 	StartProcess ("tar", "-xvzf ./externals/android/twilio-common-android.tar.bz2 -C ./externals/android/");
 	StartProcess ("tar", "-xvzf ./externals/android/twilio-ip-messaging-android.tar.bz2 -C ./externals/android/");
+
+	DownloadFile (TWILIO_VIDEO_ANDROID, "./externals/android/twilio-video-sample.zip");
+	Unzip ("./externals/android/twilio-video-sample.zip", "./externals/android/");
+	CopyFile ("./externals/android/video-quickstart-android-master/app/libs/twilio-conversations-android-0.7.2.jar", 
+		"./externals/android/twilio-conversations-android.jar");
 });
 Task ("externals-ios")
 	.WithCriteria (!FileExists ("./externals/ios/libTwilioCommon.a"))

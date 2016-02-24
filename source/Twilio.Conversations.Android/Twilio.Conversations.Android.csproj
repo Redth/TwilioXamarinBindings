@@ -4,13 +4,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</ProjectGuid>
+    <ProjectGuid>{074FF7DE-DFA6-4FC3-BA69-C9395017E951}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.Common.Android</RootNamespace>
+    <RootNamespace>Twilio.Conversations.Android</RootNamespace>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <AssemblyName>Twilio.Common.Android</AssemblyName>
+    <AssemblyName>Twilio.Conversations.Android</AssemblyName>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -55,11 +55,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
-    <EmbeddedJar Include="..\..\externals\android\twilio-common-android\libs\twilio-common-android.jar">
-      <Link>Jars\twilio-common-android.jar</Link>
+    <EmbeddedJar Include="..\..\externals\android\twilio-conversations-android.jar">
+      <Link>Jars\twilio-conversations-android.jar</Link>
     </EmbeddedJar>
   </ItemGroup>
-  <PropertyGroup>
-    <Java7DocPaths>..\..\externals\android\twilio-common-android\docs</Java7DocPaths>
-  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Twilio.Common.Android\Twilio.Common.Android.csproj">
+      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
+      <Name>Twilio.Common.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
