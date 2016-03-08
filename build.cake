@@ -2,16 +2,19 @@
 #addin nuget:?package=Cake.Xamarin
 #addin nuget:?package=Cake.FileHelpers
 
-var TWILIO_COMMON_ANDROID = "https://media.twiliocdn.com/sdk/android/common/v0.1/twilio-common-android.tar.bz2";
+// http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/maven-metadata.xml
+var TWILIO_COMMON_ANDROID_VERSION = "0.2.0";
+var TWILIO_COMMON_ANDROID = string.Format ("http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/{0}/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
 var TWILIO_IPMESSAGING_ANDROID = "https://media.twiliocdn.com/sdk/android/ip-messaging/v0.4/twilio-ip-messaging-android.tar.bz2";
-var TWILIO_VIDEO_ANDROID = "https://github.com/twiliodeved/video-quickstart-android/archive/master.zip";
+var TWILIO_VIDEO_ANDROID_VERSION = "0.8.1";
+var TWILIO_VIDEO_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/conversations-android/{0}/conversations-android-{0}.aar", TWILIO_VIDEO_ANDROID_VERSION);
 
 var TWILIO_PODSPEC = new [] { 
 	"source 'https://github.com/twilio/cocoapod-specs'",
 	"platform :ios, '8.1'",
-	"pod 'TwilioIPMessagingClient'",
-	"pod 'TwilioCommon'",
-	"pod 'TwilioConversationsClient', :podspec => 'https://media.twiliocdn.com/sdk/ios/conversations/v0.21/TwilioConversationsClient.podspec'",
+	"pod 'TwilioIPMessagingClient', '0.13.6'",
+	"pod 'TwilioCommon', '0.2.0'",
+	"pod 'TwilioConversationsClient', '0.21.6'",
 };
 
 var TARGET = Argument ("target", Argument ("t", "lib"));
@@ -38,22 +41,18 @@ Task ("samples").IsDependentOn ("libs").Does (() =>
 });
 
 Task ("externals-android")
-	.WithCriteria (!FileExists ("./externals/android/twilio-common-android/libs/twilio-common-android.jar"))
+	.WithCriteria (!FileExists ("./externals/android/twilio-common-android.jar"))
 	.Does (() => 
 {
 	if (!DirectoryExists ("./externals/android"))
 		CreateDirectory ("./externals/android");
 
-	DownloadFile (TWILIO_COMMON_ANDROID, "./externals/android/twilio-common-android.tar.bz2");
+	DownloadFile (TWILIO_COMMON_ANDROID, "./externals/android/twilio-common-android.jar");
+	
+	DownloadFile (TWILIO_VIDEO_ANDROID, "./externals/android/twilio-conversations-android.aar");
+
 	DownloadFile (TWILIO_IPMESSAGING_ANDROID, "./externals/android/twilio-ip-messaging-android.tar.bz2");
-
-	StartProcess ("tar", "-xvzf ./externals/android/twilio-common-android.tar.bz2 -C ./externals/android/");
 	StartProcess ("tar", "-xvzf ./externals/android/twilio-ip-messaging-android.tar.bz2 -C ./externals/android/");
-
-	DownloadFile (TWILIO_VIDEO_ANDROID, "./externals/android/twilio-video-sample.zip");
-	Unzip ("./externals/android/twilio-video-sample.zip", "./externals/android/");
-	CopyFile ("./externals/android/video-quickstart-android-master/app/libs/twilio-conversations-android-0.7.2.jar", 
-		"./externals/android/twilio-conversations-android.jar");
 });
 Task ("externals-ios")
 	.WithCriteria (!FileExists ("./externals/ios/libTwilioCommon.a"))
