@@ -14,8 +14,8 @@ namespace Twilio.Conversations
 
     public class ConversationCallback : Java.Lang.Object, IConversationCallback
     {
-        public Action<IConversation, ConversationException> ConversationHandler { get; set; }
-        public void OnConversation (IConversation conversation, ConversationException ex)
+        public Action<IConversation, TwilioConversationsException> ConversationHandler { get; set; }
+        public void OnConversation (IConversation conversation, TwilioConversationsException ex)
         {
             ConversationHandler?.Invoke (conversation, ex);
         }
@@ -43,16 +43,22 @@ namespace Twilio.Conversations
 
     public class LocalMediaListener : Java.Lang.Object, ILocalMediaListener
     {
-        public Action<IConversation, ILocalVideoTrack> LocalVideoTrackAddedHandler { get;set; }
-        public void OnLocalVideoTrackAdded (IConversation conversation, ILocalVideoTrack videoTrack)
+        public Action<ILocalMedia, ILocalVideoTrack> LocalVideoTrackAddedHandler { get;set; }
+		public void OnLocalVideoTrackAdded (ILocalMedia media, ILocalVideoTrack videoTrack)
         {
-            LocalVideoTrackAddedHandler?.Invoke (conversation, videoTrack);
+			LocalVideoTrackAddedHandler?.Invoke (media, videoTrack);
         }
 
-        public Action<IConversation, ILocalVideoTrack> LocalVideoTrackRemovedHandler { get;set; }
-        public void OnLocalVideoTrackRemoved (IConversation conversation, ILocalVideoTrack videoTrack)
+		public Action<ILocalMedia, ILocalVideoTrack, TwilioConversationsException> LocalVideoTrackErrorHandler { get;set; }
+		public void OnLocalVideoTrackError (ILocalMedia media, ILocalVideoTrack videoTrack, TwilioConversationsException error)
+		{
+			LocalVideoTrackErrorHandler?.Invoke (media, videoTrack, error);
+		}
+
+		public Action<ILocalMedia, ILocalVideoTrack> LocalVideoTrackRemovedHandler { get;set; }
+		public void OnLocalVideoTrackRemoved (ILocalMedia media, ILocalVideoTrack videoTrack)
         {
-            LocalVideoTrackRemovedHandler?.Invoke (conversation, videoTrack);
+			LocalVideoTrackRemovedHandler?.Invoke (media, videoTrack);
         }
     }
 
@@ -103,23 +109,23 @@ namespace Twilio.Conversations
             FirstFrameHandler?.Invoke ();
         }
 
-        public Action<int, int> FrameDimensionsChangedHandler { get; set; }
-        public void OnFrameDimensionsChanged (int width, int height)
+        public Action<int, int, int> FrameDimensionsChangedHandler { get; set; }
+        public void OnFrameDimensionsChanged (int width, int height, int i)
         {
-            FrameDimensionsChangedHandler?.Invoke (width, height);
+            FrameDimensionsChangedHandler?.Invoke (width, height, i);
         }
     }
 
     public class ConversationListener : Java.Lang.Object, IConversationListener
     {
-        public Action<IConversation, ConversationException> ConversationEndedHandler { get;set; }
-        public void OnConversationEnded (IConversation conversation, ConversationException conversationException)
+        public Action<IConversation, TwilioConversationsException> ConversationEndedHandler { get;set; }
+        public void OnConversationEnded (IConversation conversation, TwilioConversationsException conversationException)
         {
             ConversationEndedHandler?.Invoke (conversation, conversationException);
         }
 
-        public Action<IConversation, IParticipant, ConversationException> FailedToConnectToParticipantHandler { get;set; }
-        public void OnFailedToConnectParticipant (IConversation conversation, IParticipant participant, ConversationException conversationException)
+        public Action<IConversation, IParticipant, TwilioConversationsException> FailedToConnectToParticipantHandler { get;set; }
+        public void OnFailedToConnectParticipant (IConversation conversation, IParticipant participant, TwilioConversationsException conversationException)
         {
             FailedToConnectToParticipantHandler?.Invoke (conversation, participant, conversationException);
         }
@@ -139,8 +145,8 @@ namespace Twilio.Conversations
 
     public class ConversationsClientListener : Java.Lang.Object, IConversationsClientListener
     {
-        public Action<IConversationsClient, ConversationException> FailedToStartHandler { get; set; }
-        public void OnFailedToStartListening (IConversationsClient conversationsClient, ConversationException conversationException)
+        public Action<IConversationsClient, TwilioConversationsException> FailedToStartHandler { get; set; }
+        public void OnFailedToStartListening (IConversationsClient conversationsClient, TwilioConversationsException conversationException)
         {
             FailedToStartHandler?.Invoke (conversationsClient, conversationException);
         }

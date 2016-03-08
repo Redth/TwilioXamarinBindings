@@ -7,6 +7,7 @@
   <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
   -->
   <attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
+  <attr path="/api/package[@name='com.twilio.conversations.internal']" name="managedName">Twilio.Conversations.Internal</attr>
   <attr path="/api/package[@name='com.twilio.conversations.impl']" name="managedName">Twilio.Conversations.Impl</attr>
   <attr path="/api/package[@name='com.twilio.conversations.impl.core']" name="managedName">Twilio.Conversations.Impl.Core</attr>
   <attr path="/api/package[@name='com.twilio.conversations.impl.logging']" name="managedName">Twilio.Conversations.Impl.Logging</attr>
