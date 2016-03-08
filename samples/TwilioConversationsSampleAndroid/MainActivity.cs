@@ -136,11 +136,11 @@ namespace TwilioConversationsSampleAndroid
         {
             base.OnResume ();
 
-            if (participantVideoRenderer != null)
-                participantVideoRenderer.OnResume ();
+            //if (participantVideoRenderer != null)
+            //    participantVideoRenderer.OnResume ();
 
-            if (localVideoRenderer != null)
-                localVideoRenderer.OnResume ();
+            //if (localVideoRenderer != null)
+            //    localVideoRenderer.OnResume ();
 
             if (TwilioConversations.IsInitialized && conversationsClient != null && !conversationsClient.IsListening)
                 conversationsClient.Listen ();
@@ -150,11 +150,11 @@ namespace TwilioConversationsSampleAndroid
         {
             base.OnPause ();
 
-            if(participantVideoRenderer != null)
-                participantVideoRenderer.OnPause ();
+            //if(participantVideoRenderer != null)
+            //    participantVideoRenderer.OnPause ();
 
-            if (localVideoRenderer != null)
-                localVideoRenderer.OnPause ();
+            //if (localVideoRenderer != null)
+            //    localVideoRenderer.OnPause ();
             
             if (TwilioConversations.IsInitialized && conversationsClient != null  && conversationsClient.IsListening)
                 conversationsClient.Unlisten ();
@@ -186,7 +186,7 @@ namespace TwilioConversationsSampleAndroid
                     var videoTrackList = conversation.LocalMedia.LocalVideoTracks;
                     if (videoTrackList.Count > 0) {
                         var videoTrack = videoTrackList[0];
-                        videoTrack.EnableCamera (!pauseVideo);
+                        videoTrack.Enable (!pauseVideo);
                     } else {
                         Android.Util.Log.Warn (TAG, "LocalVideoTrack is not present, unable to pause");
                     }
@@ -390,7 +390,7 @@ namespace TwilioConversationsSampleAndroid
         void reset()
         {
             if (participantVideoRenderer != null) {
-                participantVideoRenderer.OnPause ();
+                //participantVideoRenderer.OnPause ();
                 participantVideoRenderer = null;
             }
             localContainer.RemoveAllViews();
@@ -473,7 +473,7 @@ namespace TwilioConversationsSampleAndroid
                         FirstFrameHandler = () => {
                             Android.Util.Log.Info (TAG, "Participant onFirstFrame");
                         },
-                        FrameDimensionsChangedHandler = (width, height) => {
+                        FrameDimensionsChangedHandler = (width, height, i) => {
                             Android.Util.Log.Info (TAG, "Participant onFrameDimensionsChanged " + width + " " + height);
                         }
                     });
@@ -545,7 +545,7 @@ namespace TwilioConversationsSampleAndroid
             var localMedia = LocalMediaFactory.CreateLocalMedia (localMediaListener ());
             var localVideoTrack = LocalVideoTrackFactory.CreateLocalVideoTrack (cameraCapturer);
             if (pauseVideo) {
-                localVideoTrack.EnableCamera (false);
+                localVideoTrack.Enable (false);
             }
             localMedia.AddLocalVideoTrack (localVideoTrack);
             if (muteMicrophone)
