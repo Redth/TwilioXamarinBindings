@@ -55,7 +55,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
-    <EmbeddedJar Include="..\..\externals\android\twilio-common-android\libs\twilio-common-android.jar">
+    <EmbeddedJar Include="..\..\externals\android\twilio-common-android.jar">
       <Link>Jars\twilio-common-android.jar</Link>
     </EmbeddedJar>
   </ItemGroup>
