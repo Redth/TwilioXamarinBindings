@@ -22,7 +22,7 @@ var TARGET = Argument ("target", Argument ("t", "lib"));
 Task ("libs").IsDependentOn ("externals").Does (() => 
 {
 	NuGetRestore ("./Twilio.sln");
-	DotNetBuild ("./Twilio.sln");
+	DotNetBuild ("./Twilio.sln", c => c.Configuration = "Release");
 });
 
 Task ("samples").IsDependentOn ("libs").Does (() => 
@@ -73,11 +73,35 @@ Task ("externals-ios")
 });
 Task ("externals").IsDependentOn ("externals-android").IsDependentOn ("externals-ios");
 
+Task ("nuget")
+	.IsDependentOn ("libs")
+	.Does (() =>
+{
+	// NuGet messes up path on mac, so let's add ./ in front twice
+	var basePath = IsRunningOnUnix () ? "././" : "./";
+
+	var nuspecs = new FilePath [] {
+		"./nuget/Twilio.Common.Xamarin.nuspec",
+		"./nuget/Twilio.IPMessaging.Xamarin.nuspec",
+		"./nuget/Twilio.Conversations.Xamarin.nuspec",
+	};
+
+	foreach (var n in nuspecs) {
+		NuGetPack (n, new NuGetPackSettings { 
+			Verbosity = NuGetVerbosity.Detailed,
+			OutputDirectory = "./nuget",
+			BasePath = basePath
+		});
+	}
+});
+
 Task ("clean").Does (() => 
 {
 	if (DirectoryExists ("./externals"))
 		DeleteDirectory ("./externals", true);
 
+	DeleteFiles ("./nuget/*.nupkg");
+	
 	CleanDirectories ("./**/bin");
 	CleanDirectories ("./**/obj");
 

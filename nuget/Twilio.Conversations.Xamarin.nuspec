@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Twilio.Conversations.Xamarin</id>
+    <title>Twilio Conversations for Xamarin</title>
+    <version>0.216.081</version>
+    <authors>Twilio</authors>
+    <owners>twilio</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Twilio Video makes it easy for you to add multi-party video calling into your mobile applications quickly.</summary>
+    <description>
+      Twilio Video makes it easy for you to add multi-party video calling into your mobile applications quickly.
+    </description>
+    <copyright>Copyright © Twilio</copyright>
+    <!-- <iconUrl></iconUrl> -->
+    <dependencies>
+      <dependency id="Twilio.Common.Xamarin" version="0.2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+
+    <!-- Android -->
+    <file src="./source/Twilio.Conversations.Android/bin/Release/Twilio.Conversations.Android.dll" target="lib\MonoAndroid403" />
+    
+    <!-- iOS -->
+    <file src="./source/Twilio.Conversations.Android/bin/Release/Twilio.Conversations.Android.dll" target="lib\Xamarin.iOS10" />
+
+  </files>
+</package>
