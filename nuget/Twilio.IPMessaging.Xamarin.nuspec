@@ -3,7 +3,7 @@
   <metadata>
     <id>Twilio.IPMessaging.Xamarin</id>
     <title>Twilio IP Messaging for Xamarin</title>
-    <version>0.136.040</version>
+    <version>0.136.040.1</version>
     <authors>Twilio</authors>
     <owners>twilio</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -23,7 +23,7 @@
     <file src="./source/Twilio.IPMessaging.Android/bin/Release/Twilio.IPMessaging.Android.dll" target="lib\MonoAndroid403" />
     
     <!-- iOS -->
-    <file src="./source/Twilio.IPMessaging.Android/bin/Release/Twilio.IPMessaging.Android.dll" target="lib\Xamarin.iOS10" />
+    <file src="./source/Twilio.IPMessaging.iOS/bin/Release/Twilio.IPMessaging.iOS.dll" target="lib\Xamarin.iOS10" />
 
   </files>
 </package>

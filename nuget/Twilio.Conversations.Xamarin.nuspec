@@ -3,7 +3,7 @@
   <metadata>
     <id>Twilio.Conversations.Xamarin</id>
     <title>Twilio Conversations for Xamarin</title>
-    <version>0.216.081</version>
+    <version>0.216.081.1</version>
     <authors>Twilio</authors>
     <owners>twilio</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -23,7 +23,7 @@
     <file src="./source/Twilio.Conversations.Android/bin/Release/Twilio.Conversations.Android.dll" target="lib\MonoAndroid403" />
     
     <!-- iOS -->
-    <file src="./source/Twilio.Conversations.Android/bin/Release/Twilio.Conversations.Android.dll" target="lib\Xamarin.iOS10" />
+    <file src="./source/Twilio.Conversations.iOS/bin/Release/Twilio.Conversations.iOS.dll" target="lib\Xamarin.iOS10" />
 
   </files>
 </package>
