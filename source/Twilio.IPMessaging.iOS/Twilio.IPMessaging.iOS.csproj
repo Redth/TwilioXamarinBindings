@@ -42,6 +42,7 @@
     <Compile Include="libTwilioIPMessagingClient.linkwith.cs">
       <DependentUpon>libTwilioIPMessagingClient.a</DependentUpon>
     </Compile>
+    <Compile Include="Extras.cs" />
   </ItemGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
