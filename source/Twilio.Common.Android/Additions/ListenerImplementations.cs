@@ -4,10 +4,10 @@ namespace Twilio.Common
 {
     public class TwilioAccessManagerListener : Java.Lang.Object, ITwilioAccessManagerListener
     {
-        public Action<ITwilioAccessManager> TokenExpiryManager { get; set; }
-        public void OnAccessManagerTokenExpire (ITwilioAccessManager accessManager)
+        public Action<ITwilioAccessManager> TokenExpiredHandler { get; set; }
+        public void OnTokenExpired (ITwilioAccessManager accessManager)
         {
-            TokenExpiryManager?.Invoke (accessManager);
+            TokenExpiredHandler?.Invoke (accessManager);
         }
 
         public Action<ITwilioAccessManager, string> ErrorHandler { get; set; }

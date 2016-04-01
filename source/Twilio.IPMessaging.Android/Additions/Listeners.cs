@@ -18,17 +18,17 @@ namespace Twilio.IPMessaging
         }
     }
 
-    public class StatusListener : Java.Lang.Object, IConstantsStatusListener
+    public class StatusListener : ConstantsStatusListener
     {
         public Action ErrorHandler { get; set; }
         public Action SuccessHandler { get; set; }
 
-        public void OnError ()
+        public override void OnError (IErrorInfo errInfo)
         {
             ErrorHandler?.Invoke ();
         }
 
-        public void OnSuccess ()
+        public override void OnSuccess ()
         {
             SuccessHandler?.Invoke ();
         }
