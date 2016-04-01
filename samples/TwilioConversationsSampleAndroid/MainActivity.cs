@@ -526,8 +526,8 @@ namespace TwilioConversationsSampleAndroid
         ITwilioAccessManagerListener accessManagerListener ()
         {
             return new TwilioAccessManagerListener() {
-                TokenExpiryManager = (am) => {
-                    conversationStatusTextView.Text = "onAccessManagerTokenExpire";
+                TokenExpiredHandler = (am) => {
+                    conversationStatusTextView.Text = "onTokenExpired";
                 },
                 TokenUpdatedHandler = (am) => {
                     conversationStatusTextView.Text = "onTokenUpdated";
