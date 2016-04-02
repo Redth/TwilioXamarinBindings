@@ -135,9 +135,14 @@ namespace TwilioIPMessagingSample
             adapter.UpdateMessages (channel.Messages.GetMessages ());
             listView.SmoothScrollToPosition (adapter.Count - 1);
         }
-        public void OnError (int code, string msg)
+        public void OnError (IErrorInfo errorInfo)
         {
-            Console.WriteLine ($"Error: {code} -> {msg}");
+            Console.WriteLine ($"Error: {errorInfo.ErrorCode} -> {errorInfo.ErrorText}");
+        }
+
+        public void OnUserInfoChange (IUserInfo userInfo)
+        {
+            Console.WriteLine ($"UserInfoChanged: {userInfo.Identity} -> {userInfo.FriendlyName}");
         }
 
         public void OnAttributesChange (IDictionary<string, string> attrs)

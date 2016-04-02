@@ -3,11 +3,19 @@
 #addin nuget:?package=Cake.FileHelpers
 
 // http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/maven-metadata.xml
-var TWILIO_COMMON_ANDROID_VERSION = "0.2.0";
-var TWILIO_COMMON_ANDROID = string.Format ("http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/{0}/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
-var TWILIO_IPMESSAGING_ANDROID = "https://media.twiliocdn.com/sdk/android/ip-messaging/v0.4/twilio-ip-messaging-android.tar.bz2";
+
+var TWILIO_COMMON_ANDROID_VERSION = "0.3.0-rc6";
+//var TWILIO_COMMON_ANDROID = string.Format ("http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/{0}/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
+var TWILIO_COMMON_ANDROID = string.Format ("http://xamarin-components-binaries.s3.amazonaws.com/Twilio/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
+
+var TWILIO_IPMESSAGING_ANDROID_VERSION = "0.6.0-rc1";
+//var TWILIO_IPMESSAGING_ANDROID = string.Format ("https://media.twiliocdn.com/sdk/android/ip-messaging/v0.4/twilio-ip-messaging-android.tar.bz2", TWILIO_IPMESSAGING_ANDROID_VERSION);
+var TWILIO_IPMESSAGING_ANDROID = string.Format ("http://xamarin-components-binaries.s3.amazonaws.com/Twilio/twilio-ip-messaging-android-{0}.jar", TWILIO_IPMESSAGING_ANDROID_VERSION);
+
 var TWILIO_VIDEO_ANDROID_VERSION = "0.8.1";
 var TWILIO_VIDEO_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/conversations-android/{0}/conversations-android-{0}.aar", TWILIO_VIDEO_ANDROID_VERSION);
+
+
 
 var TWILIO_PODSPEC = new [] { 
 	"source 'https://github.com/rbeiter/twilio-specs'",
@@ -50,8 +58,8 @@ Task ("externals-android")
 	
 	DownloadFile (TWILIO_VIDEO_ANDROID, "./externals/android/twilio-conversations-android.aar");
 
-	DownloadFile (TWILIO_IPMESSAGING_ANDROID, "./externals/android/twilio-ip-messaging-android.tar.bz2");
-	StartProcess ("tar", "-xvzf ./externals/android/twilio-ip-messaging-android.tar.bz2 -C ./externals/android/");
+	DownloadFile (TWILIO_IPMESSAGING_ANDROID, "./externals/android/twilio-ip-messaging-android.jar");
+	//StartProcess ("tar", "-xvzf ./externals/android/twilio-ip-messaging-android.tar.bz2 -C ./externals/android/");
 });
 Task ("externals-ios")
 	.WithCriteria (!FileExists ("./externals/ios/libTwilioCommon.a"))
