@@ -48,8 +48,8 @@ namespace Twilio.IPMessaging
 		NSString ErrorMsgKey { get; }
 
 		// extern NSString *const TWMErrorCodeKey;
-		[Field ("TWMErrorCodeKey", "__Internal")]
-		NSString ErrorCodeKey { get; }
+		//[Field ("TWMErrorCodeKey", "__Internal")]
+		//NSString ErrorCodeKey { get; }
 	} 
 
 	[BaseType (typeof (NSObject))]
@@ -80,9 +80,9 @@ namespace Twilio.IPMessaging
 		LogLevel LogLevel { get; set; }
 
 		// + (TwilioIPMessagingClient *)ipMessagingClientWithToken:(NSString *)token delegate:(id<TwilioIPMessagingClientDelegate>)delegate;
-		[Static]
-		[Export ("ipMessagingClientWithToken:delegate:")]
-		TwilioIPMessagingClient Create (string token, ITwilioIPMessagingClientDelegate ipMessagingDelegate);
+		//[Static]
+		//[Export ("ipMessagingClientWithToken:delegate:")]
+		//TwilioIPMessagingClient Create (string token, ITwilioIPMessagingClientDelegate ipMessagingDelegate);
 
 		// + (TwilioIPMessagingClient *)ipMessagingClientWithAccessManager:(TwilioAccessManager *)accessManager delegate:(id<TwilioIPMessagingClientDelegate>)delegate;
 		[Static]
@@ -317,6 +317,39 @@ namespace Twilio.IPMessaging
 		// - (void)ipMessagingClient:(TwilioIPMessagingClient *)client typingEndedOnChannel:(TWMChannel *)channel member:(TWMMember *)member;
 		[Export ("ipMessagingClient:typingEndedOnChannel:member:")]
 		void TypingEnded (TwilioIPMessagingClient client, Channel channel, Member member);
+	}
+
+	[Static]
+	[Partial]
+	interface ChannelOptionKey
+	{
+		[Field ("TWMChannelOptionFriendlyName", "__Internal")]
+		NSString FriendlyName { get; }
+
+		[Field ("TWMChannelOptionUniqueName", "__Internal")]
+		NSString UniqueName { get; }
+
+		[Field ("TWMChannelOptionType", "__Internal")]
+		NSString ChannelType { get; }
+
+		[Field ("TWMChannelOptionAttributes", "__Internal")]
+		NSString Attributes { get; }
+	}
+
+	[StrongDictionary ("ChannelOptionKey")]
+	interface ChannelOptions
+	{
+		[Export ("FriendlyName")]
+		string FriendlyName { get; set; }
+
+		[Export ("UniqueName")]
+		string UniqueName { get; set; }
+
+		[Export ("ChannelType")]
+		string ChannelType { get; set; }
+
+		[Export ("Attributes")]
+		string Attributes { get; set; }
 	}
 
 	[BaseType (typeof (NSObject), Name="TWMChannels")]

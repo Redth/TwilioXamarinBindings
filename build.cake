@@ -12,7 +12,7 @@ var TWILIO_VIDEO_ANDROID = string.Format ("https://bintray.com/artifact/download
 var TWILIO_PODSPEC = new [] { 
 	"source 'https://github.com/rbeiter/twilio-specs'",
 	"platform :ios, '8.1'",
-	"pod 'TwilioIPMessagingClient', '0.14.0-rc2'",
+	"pod 'TwilioIPMessagingClient', '0.14.0-rc3'",
 //	"pod 'TwilioConversationsClient', '0.21.6'",
 };
 
