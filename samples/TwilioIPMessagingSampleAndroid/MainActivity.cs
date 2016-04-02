@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace TwilioIPMessagingSample
 {
-    [Activity (Label = "Twilio IP Msging", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity (Label = "#general", MainLauncher = true, Icon = "@mipmap/icon")]
     public class MainActivity : Activity, IPMessagingClientListener, IChannelListener
     {
         internal const string TAG = "TWILIO";
@@ -28,6 +28,8 @@ namespace TwilioIPMessagingSample
         protected async override void OnCreate (Bundle savedInstanceState)
         {
             base.OnCreate (savedInstanceState);
+
+			this.ActionBar.Subtitle = "logging in...";
 
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.Main);
@@ -99,7 +101,7 @@ namespace TwilioIPMessagingSample
             var androidId = Android.Provider.Settings.Secure.GetString (ContentResolver,
                                 Android.Provider.Settings.Secure.AndroidId);
             
-            var tokenEndpoint = $"http://twilio.redth.info/token.php?device={androidId}";
+            var tokenEndpoint = $"https://brent.ngrok.io/token.php?device={androidId}";
 
             var http = new HttpClient ();
             var data = await http.GetStringAsync (tokenEndpoint);
@@ -107,6 +109,7 @@ namespace TwilioIPMessagingSample
             var json = System.Json.JsonObject.Parse (data);
 
             var identity = json["identity"]?.ToString ()?.Trim ('"');
+			this.ActionBar.Subtitle = $"Logged in as {identity}";
             var token = json["token"]?.ToString ()?.Trim ('"');
 
             return token;
@@ -231,9 +234,8 @@ namespace TwilioIPMessagingSample
             var view = convertView as LinearLayout ?? activity.LayoutInflater.Inflate (Resource.Layout.MessageItemLayout, null) as LinearLayout;
             var msg = messages [position];
 
-            view.FindViewById<TextView> (Resource.Id.textAuthor).Text = msg.Author;
-            view.FindViewById<TextView> (Resource.Id.textTimestamp).Text = msg.TimeStamp;
-            view.FindViewById<TextView> (Resource.Id.textMessage).Text = msg.MessageBody;
+            view.FindViewById<TextView> (Resource.Id.authorTextView).Text = msg.Author;
+            view.FindViewById<TextView> (Resource.Id.messageTextView).Text = msg.MessageBody;
 
             return view;
         }
