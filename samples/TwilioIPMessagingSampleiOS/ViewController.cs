@@ -86,7 +86,7 @@ namespace TwilioIPMessagingSampleiOS
 		{
 			var deviceId = UIDevice.CurrentDevice.IdentifierForVendor.AsString();
 
-			var tokenEndpoint = $"https://brent.ngrok.io/token.php?device={deviceId}";
+			var tokenEndpoint = $"https://{{your token URL}}/token.php?device={deviceId}";
 
 			var http = new HttpClient();
 			var data = await http.GetStringAsync(tokenEndpoint);

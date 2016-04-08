@@ -44,6 +44,12 @@
     <Reference Include="Mono.Android" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Json" />
+    <Reference Include="Twilio.Common.Android">
+      <HintPath>..\..\source\Twilio.Common.Android\bin\Release\Twilio.Common.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.IPMessaging.Android">
+      <HintPath>..\..\source\Twilio.IPMessaging.Android\bin\Release\Twilio.IPMessaging.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -69,14 +75,4 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\source\Twilio.Common.Android\Twilio.Common.Android.csproj">
-      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
-      <Name>Twilio.Common.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\source\Twilio.IPMessaging.Android\Twilio.IPMessaging.Android.csproj">
-      <Project>{113D21B8-63D9-4310-943F-CCF274EC2E1E}</Project>
-      <Name>Twilio.IPMessaging.Android</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
