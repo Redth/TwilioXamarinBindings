@@ -346,7 +346,7 @@ namespace Twilio.IPMessaging
 		string UniqueName { get; set; }
 
 		[Export ("ChannelType")]
-		string ChannelType { get; set; }
+		int ChannelType { get; set; }
 
 		[Export ("Attributes")]
 		string Attributes { get; set; }

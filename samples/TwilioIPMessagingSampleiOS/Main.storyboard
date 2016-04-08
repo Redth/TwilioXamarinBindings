@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="94" width="600" height="506"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3" misplaced="YES">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -87,12 +87,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="10" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="11" id="32"/>
+                            <constraint firstItem="10" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="32"/>
                             <constraint firstAttribute="trailing" secondItem="11" secondAttribute="trailing" constant="20" id="33"/>
                             <constraint firstAttribute="bottom" secondItem="11" secondAttribute="bottom" constant="8" id="34"/>
-                            <constraint firstItem="11" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="15" id="38"/>
+                            <constraint firstItem="11" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="10" id="38"/>
                             <constraint firstAttribute="bottom" secondItem="10" secondAttribute="bottom" constant="8" id="39"/>
-                            <constraint firstItem="10" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="40"/>
+                            <constraint firstItem="10" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="8" id="40"/>
                             <constraint firstItem="3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="41"/>
                             <constraint firstItem="3" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="42"/>
                             <constraint firstItem="3" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="43"/>
