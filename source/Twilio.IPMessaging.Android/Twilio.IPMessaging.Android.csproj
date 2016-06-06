@@ -57,8 +57,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
-    <EmbeddedJar Include="..\..\externals\android\twilio-ip-messaging-android.jar">
-      <Link>Jars\twilio-ip-messaging-android.jar</Link>
-    </EmbeddedJar>
+    <LibraryProjectZip Include="..\..\externals\android\twilio-ip-messaging-android.aar">
+      <Link>Jars\twilio-ip-messaging-android.aar</Link>
+    </LibraryProjectZip>
   </ItemGroup>
 </Project>

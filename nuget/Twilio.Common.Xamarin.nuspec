@@ -17,10 +17,10 @@
   <files>
 
     <!-- Android -->
-    <file src="./source/Twilio.Conversations.Android/bin/Release/Twilio.Common.Android.dll" target="lib\MonoAndroid403" />
+    <file src="./source/Twilio.Common.Android/bin/Release/Twilio.Common.Android.dll" target="lib\MonoAndroid403" />
     
     <!-- iOS -->
-    <file src="./source/Twilio.Conversations.iOS/bin/Release/Twilio.Common.iOS.dll" target="lib\Xamarin.iOS10" />    
+    <file src="./source/Twilio.Common.iOS/bin/Release/Twilio.Common.iOS.dll" target="lib\Xamarin.iOS10" />    
 
   </files>
 </package>

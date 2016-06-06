@@ -236,6 +236,17 @@ public void MessageAdded(TwilioIPMessagingClient client, Channel channel, Messag
 		ScrollToBottomMessage();
 	}
 }
+
+public void ScrollToBottomMessage()
+{
+	if (dataSource.Messages.Count == 0)
+	{
+		return;
+	}
+
+	var bottomIndexPath = NSIndexPath.FromRowSection(this.tableView.NumberOfRowsInSection(0) - 1, 0);
+	this.tableView.ScrollToRow(bottomIndexPath, UITableViewScrollPosition.Bottom, true);
+}
 ```
 
 With this in place we can send and receive messages on the general channel and have a functioning chat app in iOS! Explore some of the other samples as well as the [Twiliio Docs](http://twilio.com/docs/api/ip-messaging) to find out what else you can do with your application.

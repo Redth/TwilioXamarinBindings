@@ -1,15 +1,16 @@
 %YAML 1.2
 ---
+no_build: true
 libraries:
-  ios:
+  ios-unified:
     - ../source/Twilio.Common.iOS/bin/Release/Twilio.Common.iOS.dll
     - ../source/Twilio.IPMessaging.iOS/bin/release/Twilio.IPMessaging.iOS.dll
   android:
     - ../source/Twilio.Common.Android/bin/Release/Twilio.Common.Android.dll
     - ../source/Twilio.IPMessaging.Android/bin/release/Twilio.IPMessaging.Android.dll
 icons:
-  - twilio-128.png
-  - twilio-512.png
+  - twilio_128.png
+  - twilio_512.png
 version: "0.14"
 details: Details.md
 getting-started: GettingStarted.md
@@ -21,7 +22,7 @@ summary: Twilio IP Messaging makes it easy for you to add chat features into you
 publisher-url: http://twilio.com
 license: License.md
 screenshots:
-  - screenshots/home-screenshot.png
+  - screenshots/twilio-ipm.jpg
 name: Twilio IP Messaging
 publisher: Twilio
 ...

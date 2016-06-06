@@ -149,7 +149,7 @@ namespace TwilioIPMessagingSample
 			var androidId = Android.Provider.Settings.Secure.GetString(ContentResolver,
 								Android.Provider.Settings.Secure.AndroidId);
 
-			var tokenEndpoint = $"https://{{your access token server url}}/token.php?device={androidId}";
+			var tokenEndpoint = $"https://twilio.redth.info/token.php?device={androidId}";
 
 			var http = new HttpClient();
 			var data = await http.GetStringAsync(tokenEndpoint);
