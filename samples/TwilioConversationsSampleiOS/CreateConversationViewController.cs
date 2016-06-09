@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TwilioConversationsSampleiOS
 {
-    partial class CreateConversationViewController : UIViewController, ITwilioConversationsClientDelegate
+    partial class CreateConversationViewController : UIViewController, ITwilioConversationsClientDelegate, ITwilioAccessManagerDelegate
     {
         public CreateConversationViewController (IntPtr handle) : base (handle)
         {
@@ -27,10 +27,13 @@ namespace TwilioConversationsSampleiOS
 
             var token = await GetIdentity ();
 
-            TwilioConversationsClient.LogLevel = LogLevel.Verbose;
+            TwilioConversationsClient.LogLevel = LogLevel.Info;
 
-            twilio = TwilioConversationsClient.From (token, this);
-            twilio.Listen ();
+			var accessManager = TwilioAccessManager.Create(token, this);
+
+			twilio = TwilioConversationsClient.From(accessManager, this);
+            
+			twilio.Listen ();
         }
 
         async Task<string> GetIdentity ()
