@@ -749,9 +749,9 @@ namespace Twilio.Conversations
         [Export ("renderers", ArgumentSemantic.Strong)]
         VideoRenderer[] Renderers { get; }
 
-        // @property (readonly, assign, nonatomic) CMVideoDimensions videoDimensions;
-        [Export ("videoDimensions", ArgumentSemantic.Assign)]
-        IntPtr VideoDimensions { get; }
+		// @property (readonly, assign, nonatomic) CMVideoDimensions videoDimensions;
+		[Export ("videoDimensions")]
+		CMVideoDimensions VideoDimensions();
 
         // -(void)attach:(UIView * _Nonnull)view;
         [Export ("attach:")]
