@@ -54,12 +54,12 @@
     <TransformFile Include="Transforms\Metadata.generated.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
-  <ItemGroup>
-    <EmbeddedJar Include="..\..\externals\android\twilio-common-android.jar">
-      <Link>Jars\twilio-common-android.jar</Link>
-    </EmbeddedJar>
-  </ItemGroup>
   <PropertyGroup>
     <Java7DocPaths>..\..\externals\android\twilio-common-android\docs</Java7DocPaths>
   </PropertyGroup>
+  <ItemGroup>
+    <LibraryProjectZip Include="..\..\externals\android\twilio-common-android.aar">
+      <Link>Jars\twilio-common-android.aar</Link>
+    </LibraryProjectZip>
+  </ItemGroup>
 </Project>

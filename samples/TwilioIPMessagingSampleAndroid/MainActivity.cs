@@ -1,9 +1,11 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
+using Android.Runtime;
 using System.Net.Http;
 using System;
 using System.Threading.Tasks;
+using Twilio.Common;
 using Twilio.IPMessaging;
 using System.Collections.Generic;
 using Android.Content;
@@ -12,233 +14,314 @@ using System.Linq;
 
 namespace TwilioIPMessagingSample
 {
-    [Activity (Label = "Twilio IP Msging", MainLauncher = true, Icon = "@mipmap/icon")]
-    public class MainActivity : Activity, IPMessagingClientListener, IChannelListener
-    {
-        internal const string TAG = "TWILIO";
+	[Activity(Label = "#general", MainLauncher = true, Icon = "@mipmap/icon")]
+	public class MainActivity : Activity, IPMessagingClientListener, IChannelListener, ITwilioAccessManagerListener
+	{
+		internal const string TAG = "TWILIO";
 
-        Button buttonSend;
-        EditText textMessage;
-        ListView listView;
-        MessagesAdapter adapter;
+		Button sendButton;
+		EditText textMessage;
+		ListView listView;
+		MessagesAdapter adapter;
 
-        ITwilioIPMessagingClient twilio;
-        IChannel generalChannel;
+		ITwilioIPMessagingClient client;
+		IChannel generalChannel;
 
-        protected async override void OnCreate (Bundle savedInstanceState)
-        {
-            base.OnCreate (savedInstanceState);
+		protected async override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
 
-            // Set our view from the "main" layout resource
-            SetContentView (Resource.Layout.Main);
+			this.ActionBar.Subtitle = "logging in...";
 
-            buttonSend = FindViewById<Button> (Resource.Id.buttonSend);
-            textMessage = FindViewById<EditText> (Resource.Id.textMessage);
-            listView = FindViewById<ListView> (Resource.Id.listView);
+			// Set our view from the "main" layout resource
+			SetContentView(Resource.Layout.Main);
 
-            adapter = new MessagesAdapter (this);
-            listView.Adapter = adapter;
+			sendButton = FindViewById<Button>(Resource.Id.sendButton);
+			textMessage = FindViewById<EditText>(Resource.Id.messageTextField);
+			listView = FindViewById<ListView>(Resource.Id.listView);
 
-            buttonSend.Click += ButtonSend_Click;
+			adapter = new MessagesAdapter(this);
+			listView.Adapter = adapter;
 
-            TwilioIPMessagingSDK.SetLogLevel ((int)Android.Util.LogPriority.Debug);
+			TwilioIPMessagingSDK.SetLogLevel((int)Android.Util.LogPriority.Debug);
 
-            if (!TwilioIPMessagingSDK.IsInitialized) {
-                Console.WriteLine ("Initialize");
+			if (!TwilioIPMessagingSDK.IsInitialized)
+			{
+				Console.WriteLine("Initialize");
 
-                TwilioIPMessagingSDK.InitializeSDK (this, new InitListener {
-                    InitializedHandler = async delegate {
-                        await Setup ();
-                    },
-                    ErrorHandler = err => {
-                        Console.WriteLine (err.Message);
-                    }
-                });
-            } else {
-                await Setup ();
-            }
-        }
+				TwilioIPMessagingSDK.InitializeSDK(this, new InitListener
+				{
+					InitializedHandler = async delegate
+					{
+						await Setup();
+					},
+					ErrorHandler = err =>
+					{
+						Console.WriteLine(err.Message);
+					}
+				});
+			}
+			else {
+				await Setup();
+			}
 
-        async Task Setup ()
-        {
-            var token = await GetIdentity ();
+			sendButton.Click += ButtonSend_Click;
+		}
 
-            twilio = TwilioIPMessagingSDK.CreateIPMessagingClientWithToken (token, this);
+		async Task Setup()
+		{
+			var token = await GetIdentity();
+			var accessManager = TwilioAccessManagerFactory.CreateAccessManager(token, this);
+			client = TwilioIPMessagingSDK.CreateIPMessagingClientWithAccessManager(accessManager, this);
 
-            twilio.Channels.LoadChannelsWithListener (new StatusListener {
-                SuccessHandler = () => {
-                    generalChannel = twilio.Channels.GetChannelByUniqueName ("general");
-                    generalChannel.Listener = this;
-                    generalChannel.Join (new StatusListener {
-                        SuccessHandler = () => {
-                            RunOnUiThread (() => 
-                                Toast.MakeText (this, "Joined general channel!", ToastLength.Short).Show ());
-                        }
-                    });
-                }
-            });
-        }
+			client.Channels.LoadChannelsWithListener(new StatusListener
+			{
+				SuccessHandler = () =>
+				{
+					generalChannel = client.Channels.GetChannelByUniqueName("general");
 
-        void ButtonSend_Click (object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace (textMessage.Text)) {
-                var msg = generalChannel.Messages.CreateMessage (textMessage.Text);
+					if (generalChannel != null)
+					{
+						generalChannel.Listener = this;
+						JoinGeneralChannel();
+					}
+					else
+					{
+						CreateAndJoinGeneralChannel();
+					}
+				}
+			});
+		}
 
-                generalChannel.Messages.SendMessage (msg, new StatusListener {
-                    SuccessHandler = () => {
-                        RunOnUiThread (() => {
-                            textMessage.Text = string.Empty;
-                        });
-                    }
-                });
-            }
-        }
+		void JoinGeneralChannel()
+		{
+			generalChannel.Join(new StatusListener
+			{
+				SuccessHandler = () =>
+				{
+					RunOnUiThread(() =>
+					   Toast.MakeText(this, "Joined general channel!", ToastLength.Short).Show());
+				}
+			});
+		}
 
-        async Task<string> GetIdentity ()
-        {
-            var androidId = Android.Provider.Settings.Secure.GetString (ContentResolver,
-                                Android.Provider.Settings.Secure.AndroidId);
-            
-            var tokenEndpoint = $"http://twilio.redth.info/token.php?device={androidId}";
+		void CreateAndJoinGeneralChannel()
+		{
+			var options = new Dictionary<string, Java.Lang.Object>();
+			options["friendlyName"] = "General Chat Channel";
+			options["ChannelType"] = ChannelChannelType.ChannelTypePublic;
+			client.Channels.CreateChannel(options, new CreateChannelListener
+			{
+				OnCreatedHandler = channel =>
+				{
+					generalChannel = channel;
+					channel.SetUniqueName("general", new StatusListener
+					{
+						SuccessHandler = () => { Console.WriteLine("set unique name successfully!"); }
+					});
+					this.JoinGeneralChannel();
+				},
+				OnErrorHandler = () => { }
+			});
+		}
 
-            var http = new HttpClient ();
-            var data = await http.GetStringAsync (tokenEndpoint);
+		void ButtonSend_Click(object sender, EventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(textMessage.Text))
+			{
+				var msg = generalChannel.Messages.CreateMessage(textMessage.Text);
 
-            var json = System.Json.JsonObject.Parse (data);
+				generalChannel.Messages.SendMessage(msg, new StatusListener
+				{
+					SuccessHandler = () =>
+					{
+						RunOnUiThread(() =>
+						{
+							textMessage.Text = string.Empty;
+						});
+					}
+				});
+			}
+		}
 
-            var identity = json["identity"]?.ToString ()?.Trim ('"');
-            var token = json["token"]?.ToString ()?.Trim ('"');
+		async Task<string> GetIdentity()
+		{
+			var androidId = Android.Provider.Settings.Secure.GetString(ContentResolver,
+								Android.Provider.Settings.Secure.AndroidId);
 
-            return token;
-        }
+			var tokenEndpoint = $"https://twilio.redth.info/token.php?device={androidId}";
+
+			var http = new HttpClient();
+			var data = await http.GetStringAsync(tokenEndpoint);
+
+			var json = System.Json.JsonObject.Parse(data);
+
+			var identity = json["identity"]?.ToString()?.Trim('"');
+			this.ActionBar.Subtitle = $"Logged in as {identity}";
+			var token = json["token"]?.ToString()?.Trim('"');
+
+			return token;
+		}
 
 
-        public void OnAttributesChange (string attr)
-        {
-            
-        }
-        public void OnChannelAdd (IChannel channel)
-        {
-            
-        }
-        public void OnChannelChange (IChannel channel)
-        {
-            Android.Util.Log.Debug (TAG, "Channel Changed");
-            adapter.UpdateMessages (channel.Messages.GetMessages ());
-        }
-        public void OnChannelDelete (IChannel channel)
-        {
-        }
-        public void OnChannelHistoryLoaded (IChannel channel)
-        {
-            Android.Util.Log.Debug (TAG, "Channel History Loaded");
-            adapter.UpdateMessages (channel.Messages.GetMessages ());
-            listView.SmoothScrollToPosition (adapter.Count - 1);
-        }
-        public void OnError (IErrorInfo errorInfo)
-        {
-            Console.WriteLine ($"Error: {errorInfo.ErrorCode} -> {errorInfo.ErrorText}");
-        }
+		public void OnAttributesChange(string attr)
+		{
 
-        public void OnUserInfoChange (IUserInfo userInfo)
-        {
-            Console.WriteLine ($"UserInfoChanged: {userInfo.Identity} -> {userInfo.FriendlyName}");
-        }
+		}
+		public void OnChannelAdd(IChannel channel)
+		{
 
-        public void OnAttributesChange (IDictionary<string, string> attrs)
-        {
-        }
+		}
+		public void OnChannelChange(IChannel channel)
+		{
+			//Android.Util.Log.Debug (TAG, "Channel Changed");
+			//adapter.UpdateMessages (channel.Messages.GetMessages ());
+		}
+		public void OnChannelDelete(IChannel channel)
+		{
+		}
+		public void OnChannelHistoryLoaded(IChannel channel)
+		{
+			Android.Util.Log.Debug(TAG, "Channel History Loaded");
+			adapter.UpdateMessages(channel.Messages.GetMessages());
+			listView.SmoothScrollToPosition(adapter.Count - 1);
+		}
+		public void OnError(IErrorInfo errorInfo)
+		{
+			Console.WriteLine($"Error: {errorInfo.ErrorCode} -> {errorInfo.ErrorText}");
+		}
 
-        public void OnMemberChange (IMember member)
-        {
-            Android.Util.Log.Debug (TAG, $"Member Changed: {member.Sid}");
-        }
+		public void OnUserInfoChange(IUserInfo userInfo)
+		{
+			Console.WriteLine($"UserInfoChanged: {userInfo.Identity} -> {userInfo.FriendlyName}");
+		}
 
-        public void OnMemberDelete (IMember member)
-        {
-        }
+		public void OnAttributesChange(IDictionary<string, string> attrs)
+		{
+		}
 
-        public void OnMemberJoin (IMember member)
-        {
-            Android.Util.Log.Debug (TAG, $"Member Joined: {member.Sid}");
-        }
+		public void OnMemberChange(IMember member)
+		{
+			Android.Util.Log.Debug(TAG, $"Member Changed: {member.Sid}");
+		}
 
-        public void OnMessageAdd (IMessage message)
-        {
-            adapter.AddMessage (message);
-            listView.SmoothScrollToPosition (adapter.Count - 1);
-        }
+		public void OnMemberDelete(IMember member)
+		{
+		}
 
-        public void OnMessageChange (IMessage message)
-        {
-            Android.Util.Log.Debug (TAG, "Message Changed");
-        }
+		public void OnMemberJoin(IMember member)
+		{
+			Android.Util.Log.Debug(TAG, $"Member Joined: {member.Sid}");
+		}
 
-        public void OnMessageDelete (IMessage message)
-        {
-            Android.Util.Log.Debug (TAG, "Message Deleted");
-        }
+		public void OnMessageAdd(IMessage message)
+		{
+			adapter.AddMessage(message);
+			listView.SmoothScrollToPosition(adapter.Count - 1);
+		}
 
-        public void OnTypingEnded (IMember member)
-        {
-            Android.Util.Log.Debug (TAG, $"Typing Ended for {member.Sid}");
-        }
+		public void OnMessageChange(IMessage message)
+		{
+			Android.Util.Log.Debug(TAG, "Message Changed");
+		}
 
-        public void OnTypingStarted (IMember member)
-        {
-            Android.Util.Log.Debug (TAG, $"Typing Started for {member.Sid}");
-        }
-    }
+		public void OnMessageDelete(IMessage message)
+		{
+			Android.Util.Log.Debug(TAG, "Message Deleted");
+		}
 
-    class MessagesAdapter : BaseAdapter<IMessage>
-    {
-        public MessagesAdapter (Activity parentActivity)
-        {
-            activity = parentActivity;
-        }
+		public void OnTypingEnded(IMember member)
+		{
+			Android.Util.Log.Debug(TAG, $"Typing Ended for {member.Sid}");
+		}
 
-        List<IMessage> messages = new List<IMessage> ();
-        Activity activity;
+		public void OnTypingStarted(IMember member)
+		{
+			Android.Util.Log.Debug(TAG, $"Typing Started for {member.Sid}");
+		}
 
-        public void UpdateMessages (IEnumerable<IMessage> msgs)
-        {
-            lock (messages) {
-                messages.Clear ();
-                messages.AddRange (msgs.OrderBy (m => m.TimeStamp));
-            }
+		public void OnError(ITwilioAccessManager p0, string p1)
+		{
+			Console.WriteLine("error in access manager");
+		}
 
-            activity.RunOnUiThread (() =>
-                NotifyDataSetChanged ());
-        }
+		public void OnTokenExpired(ITwilioAccessManager p0)
+		{
+			Console.WriteLine("token expired");
+		}
 
-        public void AddMessage (IMessage msg)
-        {
-            lock (messages) {
-                messages.Add (msg);
-            }
+		public void OnTokenUpdated(ITwilioAccessManager p0)
+		{
+			Console.WriteLine("token updated");
+		}
+	}
 
-            activity.RunOnUiThread (() =>
-                NotifyDataSetChanged ());
-        }
+	class MessagesAdapter : BaseAdapter<IMessage>
+	{
+		public MessagesAdapter(Activity parentActivity)
+		{
+			activity = parentActivity;
+		}
 
-        public override long GetItemId (int position)
-        {
-            return position;
-        }
+		List<IMessage> messages = new List<IMessage>();
+		Activity activity;
 
-        public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
-        {
-            var view = convertView as LinearLayout ?? activity.LayoutInflater.Inflate (Resource.Layout.MessageItemLayout, null) as LinearLayout;
-            var msg = messages [position];
+		public void UpdateMessages(IEnumerable<IMessage> msgs)
+		{
+			lock (messages)
+			{
+				messages.Clear();
+				messages.AddRange(msgs.OrderBy(m => m.TimeStamp));
+			}
 
-            view.FindViewById<TextView> (Resource.Id.textAuthor).Text = msg.Author;
-            view.FindViewById<TextView> (Resource.Id.textTimestamp).Text = msg.TimeStamp;
-            view.FindViewById<TextView> (Resource.Id.textMessage).Text = msg.MessageBody;
+			activity.RunOnUiThread(() =>
+			   NotifyDataSetChanged());
+		}
 
-            return view;
-        }
+		public void AddMessage(IMessage msg)
+		{
+			lock (messages)
+			{
+				messages.Add(msg);
+			}
 
-        public override int Count { get { return messages.Count; } }
-        public override IMessage this [int index] { get { return messages [index]; } }
-    }
+			activity.RunOnUiThread(() =>
+			   NotifyDataSetChanged());
+		}
+
+		public override long GetItemId(int position)
+		{
+			return position;
+		}
+
+		public override Android.Views.View GetView(int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
+		{
+			var view = convertView as LinearLayout ?? activity.LayoutInflater.Inflate(Resource.Layout.MessageItemLayout, null) as LinearLayout;
+			var msg = messages[position];
+
+			view.FindViewById<TextView>(Resource.Id.authorTextView).Text = msg.Author;
+			view.FindViewById<TextView>(Resource.Id.messageTextView).Text = msg.MessageBody;
+
+			return view;
+		}
+
+		public override int Count { get { return messages.Count; } }
+		public override IMessage this[int index] { get { return messages[index]; } }
+	}
+
+	public class CreateChannelListener : ConstantsCreateChannelListener
+	{
+		public Action<IChannel> OnCreatedHandler { get; set; }
+		public Action OnErrorHandler { get; set; }
+
+		public override void OnCreated(IChannel channel)
+		{
+			OnCreatedHandler?.Invoke(channel);
+		}
+
+		public override void OnError(IErrorInfo errorInfo)
+		{
+			base.OnError(errorInfo);
+		}
+	}
 }

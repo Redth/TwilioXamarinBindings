@@ -51,14 +51,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
   <ItemGroup>
+    <ObjcBindingNativeLibrary Include="..\..\externals\ios\libTwilioIPMessagingClient.a">
+      <Link>libTwilioIPMessagingClient.a</Link>
+    </ObjcBindingNativeLibrary>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Twilio.Common.iOS\Twilio.Common.iOS.csproj">
       <Project>{B87C8255-A818-4E20-9940-81BFEF9C5137}</Project>
       <Name>Twilio.Common.iOS</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ObjcBindingNativeLibrary Include="..\..\externals\ios\libTwilioIPMessagingClient.a">
-      <Link>libTwilioIPMessagingClient.a</Link>
-    </ObjcBindingNativeLibrary>
   </ItemGroup>
 </Project>

@@ -82,6 +82,12 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Json" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="Twilio.Common.iOS">
+      <HintPath>..\..\source\Twilio.Common.iOS\bin\Release\Twilio.Common.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.IPMessaging.iOS">
+      <HintPath>..\..\source\Twilio.IPMessaging.iOS\bin\Release\Twilio.IPMessaging.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -89,7 +95,6 @@
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
     <InterfaceDefinition Include="Main.storyboard" />
-    <InterfaceDefinition Include="MessageTableViewCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -102,24 +107,10 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessageTableViewCell.cs" />
-    <Compile Include="MessageTableViewCell.designer.cs">
-      <DependentUpon>MessageTableViewCell.cs</DependentUpon>
-    </Compile>
     <Compile Include="MessageCell.cs" />
     <Compile Include="MessageCell.designer.cs">
       <DependentUpon>MessageCell.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\..\source\Twilio.Common.iOS\Twilio.Common.iOS.csproj">
-      <Project>{B87C8255-A818-4E20-9940-81BFEF9C5137}</Project>
-      <Name>Twilio.Common.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\source\Twilio.IPMessaging.iOS\Twilio.IPMessaging.iOS.csproj">
-      <Project>{B49319FF-A11F-4EC9-B518-C9F76FFC3707}</Project>
-      <Name>Twilio.IPMessaging.iOS</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

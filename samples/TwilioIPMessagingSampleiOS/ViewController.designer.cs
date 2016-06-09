@@ -16,15 +16,23 @@ namespace TwilioIPMessagingSampleiOS
 	{
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton buttonSend { get; set; }
+		UITextField messageTextField { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		NSLayoutConstraint messageTextFieldBottomConstraint { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		UIButton sendButton { get; set; }
+
+		[Outlet]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		NSLayoutConstraint sendButtonBottomConstraint { get; set; }
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UITableView tableView { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField textMessage { get; set; }
 
 		[Action ("ButtonSend_TouchUpInside:")]
 		[GeneratedCode ("iOS Designer", "1.0")]
@@ -32,17 +40,25 @@ namespace TwilioIPMessagingSampleiOS
 
 		void ReleaseDesignerOutlets ()
 		{
-			if (buttonSend != null) {
-				buttonSend.Dispose ();
-				buttonSend = null;
+			if (messageTextField != null) {
+				messageTextField.Dispose ();
+				messageTextField = null;
+			}
+			if (messageTextFieldBottomConstraint != null) {
+				messageTextFieldBottomConstraint.Dispose ();
+				messageTextFieldBottomConstraint = null;
+			}
+			if (sendButton != null) {
+				sendButton.Dispose ();
+				sendButton = null;
+			}
+			if (sendButtonBottomConstraint != null) {
+				sendButtonBottomConstraint.Dispose ();
+				sendButtonBottomConstraint = null;
 			}
 			if (tableView != null) {
 				tableView.Dispose ();
 				tableView = null;
-			}
-			if (textMessage != null) {
-				textMessage.Dispose ();
-				textMessage = null;
 			}
 		}
 	}
