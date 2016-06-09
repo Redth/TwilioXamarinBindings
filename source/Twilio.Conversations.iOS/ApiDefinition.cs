@@ -7,72 +7,117 @@ using UIKit;
 
 namespace Twilio.Conversations
 {
+	public static class ConstantsEx
+	{
+		public static CMVideoDimensions VideoConstraintsIntPtrToCMVideoDimensions(IntPtr ptr)
+		{
+			var dimensions = new CMVideoDimensions();
+
+			if (ptr != IntPtr.Zero)
+			{
+				dimensions = (CMVideoDimensions)Marshal.PtrToStructure<CMVideoDimensions>(ptr);
+			}
+
+			return dimensions;
+		}
+	}
+
 	[Static]
 	partial interface Constants
 	{
 		// extern NSString *const TWCConversationsErrorDomain;
 		[Field("TWCConversationsErrorDomain", "__Internal")]
-		NSString TWCConversationsErrorDomain { get; }
+		NSString ConversationsErrorDomain { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize352x288;
 		[Field("TWCVideoConstraintsSize352x288", "__Internal")]
-		IntPtr TWCVideoConstraintsSize352x288 { get; }
+		IntPtr VideoConstraintsSize352x288 { get; }
 
 		// extern const CMVideoDimensions TWCVideoConstraintsSize480x360;
+		/// <summary>
+		/// Gets the video constraints size480x360.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video constraints size480x360.</value>
 		[Field("TWCVideoConstraintsSize480x360", "__Internal")]
-		IntPtr TWCVideoConstraintsSize480x360 { get; }
+		IntPtr VideoConstraintsSize480x360 { get; }
 
+		/// <summary>
+		/// Gets the video constraints size640x480.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video constraints size640x480.</value>
 		// extern const CMVideoDimensions TWCVideoConstraintsSize640x480;
 		[Field("TWCVideoConstraintsSize640x480", "__Internal")]
-		IntPtr TWCVideoConstraintsSize640x480 { get; }
+		IntPtr VideoConstraintsSize640x480 { get; }
 
+		/// <summary>
+		/// Gets the video constraints size960x540.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video constraints size960x540.</value>
 		// extern const CMVideoDimensions TWCVideoConstraintsSize960x540;
 		[Field("TWCVideoConstraintsSize960x540", "__Internal")]
-		IntPtr TWCVideoConstraintsSize960x540 { get; }
+		IntPtr VideoConstraintsSize960x540 { get; }
 
+		/// <summary>
+		/// Gets the video constraints size1280x720.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video constraints size1280x720.</value>
 		// extern const CMVideoDimensions TWCVideoConstraintsSize1280x720;
 		[Field("TWCVideoConstraintsSize1280x720", "__Internal")]
-		IntPtr TWCVideoConstraintsSize1280x720 { get; }
+		IntPtr VideoConstraintsSize1280x720 { get; }
 
+		/// <summary>
+		/// Gets the video constraints size1280x960.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video constraints size1280x960.</value>
 		// extern const CMVideoDimensions TWCVideoConstraintsSize1280x960;
 		[Field("TWCVideoConstraintsSize1280x960", "__Internal")]
-		IntPtr TWCVideoConstraintsSize1280x960 { get; }
+		IntPtr VideoConstraintsSize1280x960 { get; }
+
+		/// <summary>
+		/// Gets the video size constraints none.
+		/// Note: Use ConstantsEx.VideoConstraintsIntPtrToCMVideoDimensions to convert to CMVideoDimensions
+		/// </summary>
+		/// <value>The video size constraints none.</value>
+		// extern const CMVideoDimensions TWCVideoSizeConstraintsNone;
+		[Field("TWCVideoSizeConstraintsNone", "__Internal")]
+		IntPtr VideoSizeConstraintsNone { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate30;
 		[Field("TWCVideoConstraintsFrameRate30", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate30 { get; }
+		nuint VideoConstraintsFrameRate30 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate24;
 		[Field("TWCVideoConstraintsFrameRate24", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate24 { get; }
+		nuint VideoConstraintsFrameRate24 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate20;
 		[Field("TWCVideoConstraintsFrameRate20", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate20 { get; }
+		nuint VideoConstraintsFrameRate20 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate15;
 		[Field("TWCVideoConstraintsFrameRate15", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate15 { get; }
+		nuint VideoConstraintsFrameRate15 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsFrameRate10;
 		[Field("TWCVideoConstraintsFrameRate10", "__Internal")]
-		nuint TWCVideoConstraintsFrameRate10 { get; }
+		nuint VideoConstraintsFrameRate10 { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsMaximumFPS;
 		[Field("TWCVideoConstraintsMaximumFPS", "__Internal")]
-		nuint TWCVideoConstraintsMaximumFPS { get; }
+		nuint VideoConstraintsMaximumFPS { get; }
 
 		// extern const NSUInteger TWCVideoConstraintsMinimumFPS;
 		[Field("TWCVideoConstraintsMinimumFPS", "__Internal")]
-		nuint TWCVideoConstraintsMinimumFPS { get; }
-
-		// extern const CMVideoDimensions TWCVideoSizeConstraintsNone;
-		[Field("TWCVideoSizeConstraintsNone", "__Internal")]
-		IntPtr TWCVideoSizeConstraintsNone { get; }
+		nuint VideoConstraintsMinimumFPS { get; }
 
 		// extern const NSUInteger TWCVideoFrameRateConstraintsNone;
 		[Field("TWCVideoFrameRateConstraintsNone", "__Internal")]
-		nuint TWCVideoFrameRateConstraintsNone { get; }
+		nuint VideoFrameRateConstraintsNone { get; }
 	}
 
     interface IVideoCapturer { }
