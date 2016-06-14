@@ -2,7 +2,7 @@
 #addin nuget:?package=Cake.Xamarin
 #addin nuget:?package=Cake.FileHelpers
 
-var TWILIO_COMMON_ANDROID_VERSION = "0.4.2";
+var TWILIO_COMMON_ANDROID_VERSION = "0.5.0";
 var TWILIO_COMMON_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/common-android/{0}/common-android-{0}.aar", TWILIO_COMMON_ANDROID_VERSION);
 
 var TWILIO_IPMESSAGING_ANDROID_VERSION = "0.7.0";
@@ -10,7 +10,7 @@ var TWILIO_IPMESSAGING_ANDROID_VERSION = "0.7.0";
 //var TWILIO_IPMESSAGING_ANDROID =  "https://www.dropbox.com/s/3hid6sxmbmv0vz6/twilio-ip-messaging-android.jar?dl=1";
 var TWILIO_IPMESSAGING_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/ip-messaging-android/{0}/ip-messaging-android-{0}.aar", TWILIO_IPMESSAGING_ANDROID_VERSION);
 
-var TWILIO_VIDEO_ANDROID_VERSION = "0.11.0";
+var TWILIO_VIDEO_ANDROID_VERSION = "0.12.0";
 var TWILIO_VIDEO_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/conversations-android/{0}/conversations-android-{0}.aar", TWILIO_VIDEO_ANDROID_VERSION);
 
 
