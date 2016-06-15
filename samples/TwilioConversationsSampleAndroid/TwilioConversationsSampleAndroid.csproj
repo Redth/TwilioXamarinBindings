@@ -106,11 +106,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\source\Twilio.Common.Android\Twilio.Common.Android.csproj">
-      <Project>{F78E29B1-08F2-479B-88F0-2A9AEF0F79A4}</Project>
+      <Project>{821A9F8B-F72B-4B33-8755-9D977D539862}</Project>
       <Name>Twilio.Common.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\source\Twilio.Conversations.Android\Twilio.Conversations.Android.csproj">
-      <Project>{074FF7DE-DFA6-4FC3-BA69-C9395017E951}</Project>
+      <Project>{2B447A72-EAB1-412B-86A9-8DE0239E7690}</Project>
       <Name>Twilio.Conversations.Android</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿<metadata>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
 	<!--
   This sample removes the class: android.support.v4.content.AsyncTaskLoader.LoadTask:
   <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='AsyncTaskLoader.LoadTask']" />
@@ -6,12 +7,11 @@
   This sample removes the method: android.support.v4.content.CursorLoader.loadInBackground:
   <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
   -->
-  <attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
-  <attr path="/api/package[@name='com.twilio.conversations.internal']" name="managedName">Twilio.Conversations.Internal</attr>
-  <attr path="/api/package[@name='com.twilio.conversations.impl']" name="managedName">Twilio.Conversations.Impl</attr>
-  <attr path="/api/package[@name='com.twilio.conversations.impl.core']" name="managedName">Twilio.Conversations.Impl.Core</attr>
-  <attr path="/api/package[@name='com.twilio.conversations.impl.logging']" name="managedName">Twilio.Conversations.Impl.Logging</attr>
-  <attr path="/api/package[@name='com.twilio.conversations.impl.util']" name="managedName">Twilio.Conversations.Impl.Util</attr>
-
-  <remove-node path="/api/package[contains(@name, 'org.webrtc')]" />
+	<attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
+	<attr path="/api/package[@name='com.twilio.conversations.internal']" name="managedName">Twilio.Conversations.Internal</attr>
+  	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='NativeHandleInterface']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='CoreSession']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='SessionObserver']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/class[@name='CoreTrackStatsReport']" name="visibility">public</attr>
+	<remove-node path="/api/package[contains(@name, 'org.webrtc')]" />
 </metadata>

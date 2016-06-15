@@ -17,6 +17,8 @@ namespace Twilio.Conversations
         // @required @property (nonatomic, weak) TWCLocalVideoTrack * _Nullable videoTrack;
         [NullAllowed, Export ("videoTrack", ArgumentSemantic.Weak)]
         TWCLocalVideoTrack VideoTrack { get; set; }
+
+
     }
 
     // @interface TWCCameraCapturer : NSObject <TWCVideoCapturer>

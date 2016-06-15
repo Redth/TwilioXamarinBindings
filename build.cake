@@ -2,40 +2,37 @@
 #addin nuget:?package=Cake.Xamarin
 #addin nuget:?package=Cake.FileHelpers
 
-// http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/maven-metadata.xml
+var TWILIO_COMMON_ANDROID_VERSION = "0.5.0";
+var TWILIO_COMMON_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/common-android/{0}/common-android-{0}.aar", TWILIO_COMMON_ANDROID_VERSION);
 
-var TWILIO_COMMON_ANDROID_VERSION = "0.3.0-rc6";
-//var TWILIO_COMMON_ANDROID = string.Format ("http://media.twiliocdn.com/sdk/maven/com/twilio/sdk/twilio-common-android/{0}/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
-var TWILIO_COMMON_ANDROID = string.Format ("http://xamarin-components-binaries.s3.amazonaws.com/Twilio/twilio-common-android-{0}.jar", TWILIO_COMMON_ANDROID_VERSION);
-
-var TWILIO_IPMESSAGING_ANDROID_VERSION = "0.6.0-rc1";
+var TWILIO_IPMESSAGING_ANDROID_VERSION = "0.7.0";
 //var TWILIO_IPMESSAGING_ANDROID = string.Format ("https://media.twiliocdn.com/sdk/android/ip-messaging/v0.4/twilio-ip-messaging-android.tar.bz2", TWILIO_IPMESSAGING_ANDROID_VERSION);
-var TWILIO_IPMESSAGING_ANDROID = string.Format ("http://xamarin-components-binaries.s3.amazonaws.com/Twilio/twilio-ip-messaging-android-{0}.jar", TWILIO_IPMESSAGING_ANDROID_VERSION);
+//var TWILIO_IPMESSAGING_ANDROID =  "https://www.dropbox.com/s/3hid6sxmbmv0vz6/twilio-ip-messaging-android.jar?dl=1";
+var TWILIO_IPMESSAGING_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/ip-messaging-android/{0}/ip-messaging-android-{0}.aar", TWILIO_IPMESSAGING_ANDROID_VERSION);
 
-var TWILIO_VIDEO_ANDROID_VERSION = "0.8.1";
+var TWILIO_VIDEO_ANDROID_VERSION = "0.12.0";
 var TWILIO_VIDEO_ANDROID = string.Format ("https://bintray.com/artifact/download/twilio/releases/com/twilio/conversations-android/{0}/conversations-android-{0}.aar", TWILIO_VIDEO_ANDROID_VERSION);
 
 
 
-var TWILIO_PODSPEC = new [] { 
+var TWILIO_PODSPEC = new [] {
 	"source 'https://github.com/twilio/cocoapod-specs'",
 	"platform :ios, '8.1'",
-	"pod 'TwilioIPMessagingClient', '0.13.6'",
-	"pod 'TwilioCommon', '0.2.0'",
-	"pod 'TwilioConversationsClient', '0.21.6'",
+	"pod 'TwilioIPMessagingClient'",
+  "pod 'TwilioConversationsClient'",
 };
 
 var TARGET = Argument ("target", Argument ("t", "lib"));
 
-Task ("libs").IsDependentOn ("externals").Does (() => 
+Task ("libs").IsDependentOn ("externals").Does (() =>
 {
 	NuGetRestore ("./Twilio.sln");
 	DotNetBuild ("./Twilio.sln", c => c.Configuration = "Release");
 });
 
-Task ("samples").IsDependentOn ("libs").Does (() => 
+Task ("samples").IsDependentOn ("libs").Does (() =>
 {
-	var sampleSlns = new [] { 
+	var sampleSlns = new [] {
 		"./samples/TwilioIPMessagingSampleAndroid.sln",
 		"./samples/TwilioIPMessagingSampleiOS.sln",
 		"./samples/TwilioConversationsSampleAndroid.sln",
@@ -50,21 +47,21 @@ Task ("samples").IsDependentOn ("libs").Does (() =>
 
 Task ("externals-android")
 	.WithCriteria (!FileExists ("./externals/android/twilio-common-android.jar"))
-	.Does (() => 
+	.Does (() =>
 {
 	if (!DirectoryExists ("./externals/android"))
 		CreateDirectory ("./externals/android");
 
-	DownloadFile (TWILIO_COMMON_ANDROID, "./externals/android/twilio-common-android.jar");
-	
+	DownloadFile (TWILIO_COMMON_ANDROID, "./externals/android/twilio-common-android.aar");
+
 	DownloadFile (TWILIO_VIDEO_ANDROID, "./externals/android/twilio-conversations-android.aar");
 
-	DownloadFile (TWILIO_IPMESSAGING_ANDROID, "./externals/android/twilio-ip-messaging-android.jar");
+	DownloadFile (TWILIO_IPMESSAGING_ANDROID, "./externals/android/twilio-ip-messaging-android.aar");
 	//StartProcess ("tar", "-xvzf ./externals/android/twilio-ip-messaging-android.tar.bz2 -C ./externals/android/");
 });
 Task ("externals-ios")
 	.WithCriteria (!FileExists ("./externals/ios/libTwilioCommon.a"))
-	.Does (() => 
+	.Does (() =>
 {
 	if (!DirectoryExists ("./externals/ios"))
 		CreateDirectory ("./externals/ios");
@@ -72,11 +69,11 @@ Task ("externals-ios")
 	FileWriteLines ("./externals/ios/Podfile", TWILIO_PODSPEC);
 	CocoaPodInstall ("./externals/ios", new CocoaPodInstallSettings { NoIntegrate = true });
 
-	CopyFile ("./externals/ios/Pods/TwilioCommon/TwilioCommon.framework/Versions/A/TwilioCommon", 
+	CopyFile ("./externals/ios/Pods/TwilioCommon/TwilioCommon.framework/Versions/A/TwilioCommon",
 		"./externals/ios/libTwilioCommon.a");
-	CopyFile ("./externals/ios/Pods/TwilioIPMessagingClient/TwilioIPMessagingClient.framework/Versions/A/TwilioIPMessagingClient", 
+	CopyFile ("./externals/ios/Pods/TwilioIPMessagingClient/TwilioIPMessagingClient.framework/Versions/A/TwilioIPMessagingClient",
 		"./externals/ios/libTwilioIPMessagingClient.a");
-	CopyFile ("./externals/ios/Pods/TwilioConversationsClient/TwilioConversationsClient.framework/Versions/A/TwilioConversationsClient", 
+	CopyFile ("./externals/ios/Pods/TwilioConversationsClient/TwilioConversationsClient.framework/Versions/A/TwilioConversationsClient",
 		"./externals/ios/libTwilioConversationsClient.a");
 });
 Task ("externals").IsDependentOn ("externals-android").IsDependentOn ("externals-ios");
@@ -95,7 +92,7 @@ Task ("nuget")
 	};
 
 	foreach (var n in nuspecs) {
-		NuGetPack (n, new NuGetPackSettings { 
+		NuGetPack (n, new NuGetPackSettings {
 			Verbosity = NuGetVerbosity.Detailed,
 			OutputDirectory = "./nuget",
 			BasePath = basePath
@@ -103,13 +100,13 @@ Task ("nuget")
 	}
 });
 
-Task ("clean").Does (() => 
+Task ("clean").Does (() =>
 {
 	if (DirectoryExists ("./externals"))
 		DeleteDirectory ("./externals", true);
 
 	DeleteFiles ("./nuget/*.nupkg");
-	
+
 	CleanDirectories ("./**/bin");
 	CleanDirectories ("./**/obj");
 

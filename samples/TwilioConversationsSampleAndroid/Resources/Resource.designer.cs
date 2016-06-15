@@ -2514,20 +2514,23 @@ namespace TwilioConversationsSampleAndroid
 			// aapt resource value: 0x7f0b0014
 			public const int abc_toolbar_collapse_description = 2131427348;
 			
-			// aapt resource value: 0x7f0b0017
-			public const int action_settings = 2131427351;
+			// aapt resource value: 0x7f0b0018
+			public const int action_settings = 2131427352;
 			
-			// aapt resource value: 0x7f0b0016
-			public const int app_name = 2131427350;
+			// aapt resource value: 0x7f0b0017
+			public const int app_name = 2131427351;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int appbar_scrolling_view_behavior = 2131427328;
 			
+			// aapt resource value: 0x7f0b0016
+			public const int capturer_preview_content_description = 2131427350;
+			
 			// aapt resource value: 0x7f0b0001
 			public const int character_counter_pattern = 2131427329;
 			
-			// aapt resource value: 0x7f0b0018
-			public const int conversationStatus = 2131427352;
+			// aapt resource value: 0x7f0b0019
+			public const int conversationStatus = 2131427353;
 			
 			// aapt resource value: 0x7f0b0015
 			public const int status_bar_notification_info_overflow = 2131427349;
